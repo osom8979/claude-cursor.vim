@@ -1,0 +1,97 @@
+*claude-cursor.txt*	Claude integration for Vim/Neovim
+
+Author:  Your Name
+License: MIT
+Version: 0.1.0
+
+==============================================================================
+CONTENTS                                               *claude-cursor-contents*
+
+1. Introduction................................|claude-cursor-introduction|
+2. Installation................................|claude-cursor-installation|
+3. Configuration...............................|claude-cursor-configuration|
+4. Commands....................................|claude-cursor-commands|
+5. Mappings....................................|claude-cursor-mappings|
+6. Functions...................................|claude-cursor-functions|
+
+==============================================================================
+1. INTRODUCTION                                    *claude-cursor-introduction*
+
+Claude Cursor is a Vim/Neovim plugin that integrates Claude AI assistant
+into your editing workflow. It provides commands to chat with Claude,
+explain code selections, and more.
+
+==============================================================================
+2. INSTALLATION                                    *claude-cursor-installation*
+
+Using vim-plug: >
+    Plug 'username/claude-cursor.vim'
+<
+
+Using Vundle: >
+    Plugin 'username/claude-cursor.vim'
+<
+
+Using Pathogen: >
+    git clone https://github.com/username/claude-cursor.vim.git ~/.vim/bundle/claude-cursor.vim
+<
+
+==============================================================================
+3. CONFIGURATION                                  *claude-cursor-configuration*
+
+                                                    *g:claude_cursor_enabled*
+g:claude_cursor_enabled~
+    Default: 1
+    Enable or disable the plugin.
+
+                                                    *g:claude_cursor_api_key*
+g:claude_cursor_api_key~
+    Default: ''
+    Your Claude API key. Required for the plugin to work.
+
+Example configuration: >
+    let g:claude_cursor_enabled = 1
+    let g:claude_cursor_api_key = 'your-api-key-here'
+<
+
+==============================================================================
+4. COMMANDS                                            *claude-cursor-commands*
+
+                                                            *:ClaudeToggle*
+:ClaudeToggle
+    Toggle the plugin on/off.
+
+                                                              *:ClaudeChat*
+:ClaudeChat {query}
+    Chat with Claude. If no query is provided, you'll be prompted to enter one.
+
+                                                            *:ClaudeExplain*
+:ClaudeExplain
+    Explain the currently selected text using Claude.
+
+==============================================================================
+5. MAPPINGS                                            *claude-cursor-mappings*
+
+Default mappings (if g:claude_cursor_enabled is 1):
+
+<leader>ct		Toggle Claude Cursor on/off
+<leader>ce		Explain visual selection (visual mode)
+<leader>cc		Open Claude chat
+
+==============================================================================
+6. FUNCTIONS                                          *claude-cursor-functions*
+
+claude_cursor#toggle()                               *claude_cursor#toggle()*
+    Toggle the plugin on/off.
+
+claude_cursor#chat({query})                             *claude_cursor#chat()*
+    Chat with Claude using the provided query.
+
+claude_cursor#explain_selection()           *claude_cursor#explain_selection()*
+    Explain the currently selected text.
+
+claude_cursor#is_enabled()                         *claude_cursor#is_enabled()*
+    Returns 1 if the plugin is enabled, 0 otherwise.
+
+==============================================================================
+vim:tw=78:ts=8:ft=help:norl:
