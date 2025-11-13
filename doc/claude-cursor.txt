@@ -1,6 +1,6 @@
 *claude-cursor.txt*	Claude integration for Vim/Neovim
 
-Author:  Your Name
+Author:  zer0 <osom8979@gmail.com>
 License: MIT
 Version: 0.1.0
 
@@ -25,15 +25,15 @@ explain code selections, and more.
 2. INSTALLATION                                    *claude-cursor-installation*
 
 Using vim-plug: >
-    Plug 'username/claude-cursor.vim'
+    Plug 'osom8979/claude-cursor.vim'
 <
 
 Using Vundle: >
-    Plugin 'username/claude-cursor.vim'
+    Plugin 'osom8979/claude-cursor.vim'
 <
 
 Using Pathogen: >
-    git clone https://github.com/username/claude-cursor.vim.git ~/.vim/bundle/claude-cursor.vim
+    git clone https://github.com/osom8979/claude-cursor.vim.git ~/.vim/bundle/claude-cursor.vim
 <
 
 ==============================================================================
