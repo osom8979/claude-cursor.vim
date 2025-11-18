@@ -1,4 +1,4 @@
-*claude-cursor.txt*	Claude integration for Vim/Neovim
+*claude-cursor.txt*	Claude Code integration for Neovim
 
 Author:  zer0 <osom8979@gmail.com>
 License: MIT
@@ -8,21 +8,28 @@ Version: 0.1.0
 CONTENTS                                               *claude-cursor-contents*
 
 1. Introduction................................|claude-cursor-introduction|
-2. Installation................................|claude-cursor-installation|
-3. Configuration...............................|claude-cursor-configuration|
-4. Commands....................................|claude-cursor-commands|
-5. Mappings....................................|claude-cursor-mappings|
-6. Functions...................................|claude-cursor-functions|
+2. Requirements................................|claude-cursor-requirements|
+3. Installation................................|claude-cursor-installation|
+4. Configuration...............................|claude-cursor-configuration|
+5. Commands....................................|claude-cursor-commands|
+6. Mappings....................................|claude-cursor-mappings|
+7. Functions...................................|claude-cursor-functions|
 
 ==============================================================================
 1. INTRODUCTION                                    *claude-cursor-introduction*
 
-Claude Cursor is a Vim/Neovim plugin that integrates Claude AI assistant
-into your editing workflow. It provides commands to chat with Claude,
-explain code selections, and more.
+Claude Cursor is a Neovim plugin that integrates the Claude Code CLI into
+your editing workflow. It provides a terminal interface for Claude Code and
+commands to explain code selections and get code suggestions.
 
 ==============================================================================
-2. INSTALLATION                                    *claude-cursor-installation*
+2. REQUIREMENTS                                    *claude-cursor-requirements*
+
+- Neovim (this plugin does not work with Vim)
+- Claude Code CLI executable installed and configured
+
+==============================================================================
+3. INSTALLATION                                    *claude-cursor-installation*
 
 Using vim-plug: >
     Plug 'osom8979/claude-cursor.vim'
@@ -37,61 +44,130 @@ Using Pathogen: >
 <
 
 ==============================================================================
-3. CONFIGURATION                                  *claude-cursor-configuration*
+4. CONFIGURATION                                  *claude-cursor-configuration*
 
                                                     *g:claude_cursor_enabled*
 g:claude_cursor_enabled~
     Default: 1
     Enable or disable the plugin.
 
-                                                    *g:claude_cursor_api_key*
-g:claude_cursor_api_key~
+                                                  *g:claude_cursor_executable*
+g:claude_cursor_executable~
+    Default: 'claude'
+    Path to the Claude Code CLI executable.
+
+                                              *g:claude_cursor_terminal_width*
+g:claude_cursor_terminal_width~
+    Default: 80
+    Width of the terminal window when showing Claude Code.
+
+                                                 *g:claude_cursor_target_file*
+g:claude_cursor_target_file~
     Default: ''
-    Your Claude API key. Required for the plugin to work.
+    Internal variable storing current file path.
+
+                                                 *g:claude_cursor_target_line*
+g:claude_cursor_target_line~
+    Default: -1
+    Internal variable storing current line number.
+
+                                               *g:claude_cursor_target_column*
+g:claude_cursor_target_column~
+    Default: -1
+    Internal variable storing current column number.
+
+                                             *g:claude_cursor_request_prompt*
+g:claude_cursor_request_prompt~
+    Default: 'Do you have any additional requests?'
+    Default prompt for additional requests.
+
+                                    *g:claude_cursor_korean_to_english_prompt*
+g:claude_cursor_korean_to_english_prompt~
+    Default: 'Translate the following Korean text to English: '
+    Prompt template for Korean to English translation.
+
+                                              *g:claude_cursor_suggest_prompt*
+g:claude_cursor_suggest_prompt~
+    Multi-line prompt template for code suggestions.
+
+                                              *g:claude_cursor_explain_prompt*
+g:claude_cursor_explain_prompt~
+    Multi-line prompt template for code explanations.
+
+                                               *g:claude_cursor_suggest_model*
+g:claude_cursor_suggest_model~
+    Default: 'claude-haiku-4-5-20251001'
+    Claude model to use for code suggestions.
+
+                                               *g:claude_cursor_explain_model*
+g:claude_cursor_explain_model~
+    Default: 'claude-haiku-4-5-20251001'
+    Claude model to use for code explanations.
 
 Example configuration: >
     let g:claude_cursor_enabled = 1
-    let g:claude_cursor_api_key = 'your-api-key-here'
+    let g:claude_cursor_executable = '/usr/local/bin/claude'
+    let g:claude_cursor_terminal_width = 100
 <
 
 ==============================================================================
-4. COMMANDS                                            *claude-cursor-commands*
+5. COMMANDS                                            *claude-cursor-commands*
 
-                                                            *:ClaudeToggle*
-:ClaudeToggle
-    Toggle the plugin on/off.
+                                                     *:ClaudeCursorToggle*
+:ClaudeCursorToggle
+    Toggle the Claude Code terminal visibility.
 
-                                                              *:ClaudeChat*
-:ClaudeChat {query}
-    Chat with Claude. If no query is provided, you'll be prompted to enter one.
+                                                      *:ClaudeCursorFocus*
+:ClaudeCursorFocus
+    Focus on the Claude Code terminal window.
 
-                                                            *:ClaudeExplain*
-:ClaudeExplain
-    Explain the currently selected text using Claude.
+                                                    *:ClaudeCursorExplain*
+:ClaudeCursorExplain
+    Explain the currently selected text or current line using Claude.
+
+                                                    *:ClaudeCursorSuggest*
+:ClaudeCursorSuggest
+    Get code suggestions for the current cursor position.
 
 ==============================================================================
-5. MAPPINGS                                            *claude-cursor-mappings*
+6. MAPPINGS                                            *claude-cursor-mappings*
 
 Default mappings (if g:claude_cursor_enabled is 1):
 
-<leader>ct		Toggle Claude Cursor on/off
-<leader>ce		Explain visual selection (visual mode)
-<leader>cc		Open Claude chat
+<C-L>			Toggle Claude Code terminal (all modes)
+<C-K>			Explain selection/line (normal/visual mode)
+<C-Space>		Get code suggestions (normal mode)
+<C-K>			Get code suggestions (insert mode)
 
 ==============================================================================
-6. FUNCTIONS                                          *claude-cursor-functions*
+7. FUNCTIONS                                          *claude-cursor-functions*
 
 claude_cursor#toggle()                               *claude_cursor#toggle()*
-    Toggle the plugin on/off.
+    Toggle the Claude Code terminal visibility.
 
-claude_cursor#chat({query})                             *claude_cursor#chat()*
-    Chat with Claude using the provided query.
+claude_cursor#show()                                   *claude_cursor#show()*
+    Show the Claude Code terminal.
 
-claude_cursor#explain_selection()           *claude_cursor#explain_selection()*
-    Explain the currently selected text.
+claude_cursor#hide()                                   *claude_cursor#hide()*
+    Hide the Claude Code terminal.
 
-claude_cursor#is_enabled()                         *claude_cursor#is_enabled()*
-    Returns 1 if the plugin is enabled, 0 otherwise.
+claude_cursor#focus()                                 *claude_cursor#focus()*
+    Focus on the Claude Code terminal window.
+
+claude_cursor#is_terminal_visible()       *claude_cursor#is_terminal_visible()*
+    Returns 1 if the terminal is visible, 0 otherwise.
+
+claude_cursor#suggest()                             *claude_cursor#suggest()*
+    Get code suggestions for the current cursor position.
+
+claude_cursor#explain()                             *claude_cursor#explain()*
+    Explain the currently selected text or current line.
+
+claude_cursor#start_job({prompt}, {model})        *claude_cursor#start_job()*
+    Start a Claude job with the given prompt and model.
+
+claude_cursor#cancel_job()                       *claude_cursor#cancel_job()*
+    Cancel the currently running Claude job.
 
 ==============================================================================
 vim:tw=78:ts=8:ft=help:norl:
