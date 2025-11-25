@@ -94,6 +94,7 @@ let s:default_haiku_model = 'claude-haiku-4-5-20251001'
 
 " Opus 4.1 - Exceptional model for specialized reasoning tasks
 let s:default_opus_model = 'claude-opus-4-1-20250805'
+let s:default_opus_model = 'claude-opus-4-5-20251101'
 
 if !exists('g:claude_cursor_suggest_model')
     let g:claude_cursor_suggest_model = s:default_haiku_model
