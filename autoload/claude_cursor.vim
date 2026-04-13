@@ -51,6 +51,9 @@ function! claude_cursor#show() abort
         setlocal bufhidden=hide
         setlocal nonumber
         setlocal norelativenumber
+        setlocal nolist
+        setlocal signcolumn=no
+        setlocal foldcolumn=0
     endif
 
     startinsert
